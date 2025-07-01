@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Weather app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url("{{ url_for('static', filename='sky.jpg')}}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            display: flex;
+            color: white;
+        }
+
+        .sidebar {
+            width: 180px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .main {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .search-section {
+            margin-bottom: 30px;
+        }
+
+        .search-section h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            width: 250px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            background-color: #ffffffaa;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: rgb(0, 0, 0);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            height: 140px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover,
+        .card:active {
+            transform: scale(0.95);
+        }
+
+        .sunrise-sunset {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            padding: 20px 10px;
+        }
+
+        .sun-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .sun-icon {
+            font-size: 28px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Weather</h2>
+    </div>
+
+    <div class="main">
+        <div class="search-section">
+            <h1>Location: {{ weather.city }}</h1>
+            <form method="POST">
+                <div class="search-box">
+                    <input type="text" name="city" placeholder="Enter City..." required>
+                    <button type="submit">🔍</button>
+                </div>
+            </form>
+            {% if weather.error %}
+            <p style="color: red;">{{ weather.error }}</p>
+            {% endif %}
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>🌡️ Temperature:</h3>
+                <p>{{ weather.temperature if weather.temperature else '---' }}°C</p>
+            </div>
+            <div class="card">
+                <h3>🤒 Feels Like:</h3>
+                <p>{{ weather.feels_like if weather.feels_like else '---' }}°C</p>
+            </div>
+            <div class="card">
+                <h3>🌥️ Condition:</h3>
+                <p>{{ weather.description if weather.description else '---' }}</p>
+            </div>
+            <div class="card">
+                <h3>💧 Humidity:</h3>
+                <p>{{ weather.humidity if weather.humidity else '---' }}</p>
+            </div>
+            <div class="card">
+                <h3>🌬️ Wind: </h3>
+                <p>speed : {{ weather.wind_speed if weather.wind_speed else '---' }} km/h</p>
+                <p>direction : ({{ weather.wind_deg if weather.wind_deg else '---' }}°)</p>
+            </div>
+            <div class="card">
+                <h3>☀️ UV Index:</h3>
+                <p>{{ weather.uv_index if weather.uv_index else '---' }}</p>
+            </div>
+            <div class="card">
+                <h3>🧪 Air Quality: </h3>
+                <p>{{ weather.aqi if weather.aqi else '---' }}</p>
+            </div>
+            <div class="card sunrise-sunset">
+                <div class="sun-row">
+                    <span class="sun-icon">🌅</span>
+                    <div>
+                        <h3>Sunrise</h3>
+                        <p>{{ weather.sunrise if weather.sunrise else '---' }}</p>
+                    </div>
+                </div>
+                <div class="sun-row">
+                    <span class="sun-icon">🌇</span>
+                    <div>
+                        <h3>Sunset</h3>
+                        <p>{{ weather.sunset if weather.sunset else '---' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
