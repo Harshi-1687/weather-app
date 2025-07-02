@@ -1,15 +1,10 @@
 from flask import Flask,render_template,request
 import requests
 from datetime import datetime
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = Flask(__name__)
 
-API_KEY=os.getenv("WEATHER_API_KEY")
-
+API_KEY='your api key here'
 @app.route('/',methods=['GET','POST'])
 def home():
     weather={}
