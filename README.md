@@ -13,11 +13,6 @@ This app allows users to search for any city and get real-time weather data such
 - 🌥️ Weather condition description
 
 ---
-## 🚀 Live Demo
-
-🔗 [Coming Soon] — Add your Render or deployment link here
-
----
 
 ## 🛠️ Technologies Used
 
